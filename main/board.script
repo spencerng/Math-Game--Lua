@@ -1,0 +1,151 @@
+local numofoperations = 5
+local numofcards = 6
+local operations = { hash("add"), hash("subtract"), hash("divide"), hash("multiply"), hash("exponent")}
+local cardnum = {}
+local newcard = {}
+local opholderpos
+local oppos
+local cardholderpos
+local cardholderpos2
+local cardholderflag = 0
+local cardpos
+local cardpos2
+local new = 6
+local connectflag = {0, 0, 0}
+local hold = {0, 0, 0}
+
+function init(self)
+	local x = 1
+	local y = 1
+	self.op = {}
+	self.card = {}
+	self.result = {}
+	
+	msg.post("controller#gui", "hide")
+end
+
+function start_game(self)
+	for x = 1,numofoperations do
+        print(x)
+        o = operations[x]
+        local id = factory.create("#operationfactory", vmath.vector3(100 + (125*x), 75, 0.6), nil, { operation = o })
+        self.op[x] = {id = id, operation = o, x = 100 + (125*x), y = 75} 
+        print(o)
+    end
+    
+    math.randomseed(os.time()) -- random initialize
+    for y = 1, numofcards do
+     	cardnum[y] = math.random(25)
+    end
+    for y = 1,numofcards do
+     	local id = factory.create("#cardfactory", vmath.vector3((130*y), 580, 0.6), nil, {number = hash(cardnum[y]) })
+     	self.card[y] = {id = id, card = cardnum[y], x = (130*y), y = 580}
+     	local operationgui = msg.url("board#gui")
+		msg.post(operationgui, "card_number", {cardnum[y], y})
+     	
+     	print("rand " .. y .. ":" .. cardnum[y])
+    end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("start_game") then
+		start_game(self)
+	end
+    if message_id == hash("op_position") then
+       	opholderpos = message[1]
+       	--pprint(opholderpos)
+    elseif message_id == hash("card_position") then
+    	if cardholderflag == 0 then
+    		cardholderpos = message[1]
+    		cardholderflag = 1
+    	elseif cardholderflag == 1 then
+    		cardholderpos2 = message[1]
+    		cardholderflag = 0
+    	end
+    end
+    if message_id == hash("solved") then
+    	print(hold[1])
+    	go.set_position(vmath.vector3(100 + (125 * hold[1]), 75, 0.6), "/instance" .. hold[1] - 1)
+    	--go.delete("/instance" .. hold[2] + 4)
+    	--go.delete("/instance" .. hold[3] + 4)
+    	new = new + 1
+    	local id = factory.create("#cardfactory", vmath.vector3((130*hold[2]), 580, 0.6), nil, {number = hash(message[1]) })
+     	self.card[new] = {id = id, card = newcard[hold[2]], x = (130*hold[2]), y = 580}
+     	cardnum[new] = message[1]
+    	go.set_position(vmath.vector3(0, 0, -1), "/instance" .. hold[3] + 4)
+    	go.set_position(vmath.vector3(0, 0, -1), "/instance" .. hold[2] + 4)
+    	for x = 1, 3 do
+    		connectflag[x] = 0
+    	end
+    	msg.post("board#gui", "solved", {hold[2], hold[3], message[1], new})
+    	msg.post("controller#gui", "hide")
+    end
+end
+
+function update(self, dt)
+	for a = 1, numofoperations do
+		local operationposition = go.get_position(self.op[a].id)
+		local operationgui = msg.url("board#gui") -- send index a-1
+		
+		msg.post(operationgui, "op_position", {operationposition, a})
+		--print(operationposition)
+	end
+	
+	for b = 1, new do
+		local cardposition = go.get_position(self.card[b].id)
+		local cardgui = msg.url("board#gui")
+		msg.post(cardgui, "card_position", {cardposition, b})
+	end
+
+	for x = 1, numofoperations do
+		if(connectflag[1] == 0) then
+			oppos = go.get_position(self.op[x].id)
+			if((oppos.x < opholderpos.x + 50 and oppos.x > opholderpos.x - 50) and (oppos.y < opholderpos.y + 50 and oppos.y > opholderpos.y - 50)) then
+			 	oppos = opholderpos
+			 	go.set_position(oppos, self.op[x].id)
+			 	connectflag[1] = 1
+			 	hold[1] = x
+			end
+		end
+	end
+
+	--print(cardholderpos)
+	--print(cardholderpos2)
+	 
+	 for y = 1, new do
+	 	if(connectflag[2] == 0)then
+	 		cardpos = go.get_position(self.card[y].id)
+	 	end
+	 	if(connectflag[3] == 0) then
+	 		cardpos2 = go.get_position(self.card[y].id)
+	 	end
+	 	
+	 	if((cardpos.x < cardholderpos.x + 80 and cardpos.x > cardholderpos.x - 80) and (cardpos.y < cardholderpos.y + 50 and cardpos.y > cardholderpos.y - 50) and (connectflag[2] == 0)) then
+	 		cardpos = cardholderpos
+	 		go.set_position(cardpos, self.card[y].id)
+	 		connectflag[2] = 1
+	 		hold[2] = y
+	 	elseif((cardpos2.x < cardholderpos2.x + 80 and cardpos2.x > cardholderpos2.x - 80) and (cardpos2.y < cardholderpos2.y + 50 and cardpos2.y > cardholderpos2.y - 50) and (connectflag[3] == 0)) then
+	 		cardpos2 = cardholderpos2
+	 		go.set_position(cardpos2, self.card[y].id)
+	 		connectflag[3] = 1
+	 		hold[3] = y
+	 	end
+	 	--print(hold[2])
+	 	--print(hold[3])
+	 end
+	 if(hold[1] > 0) then
+	 	go.set_position(oppos, self.op[hold[1]].id)
+	 end
+	 if(hold[2] > 0) then
+	 	go.set_position(cardpos, self.card[hold[2]].id)
+	 end
+	 if(hold[3] > 0) then
+	 	go.set_position(cardpos2, self.card[hold[3]].id)
+	 end
+	 if(connectflag[1] == 1 and connectflag[2] == 1 and connectflag[3] == 1) then
+	 	local solvegui = msg.url("controller#gui")
+		msg.post(solvegui, "solve_components", {operations[hold[1]], cardnum[hold[2]], cardnum[hold[3]]})
+	 end
+end
+

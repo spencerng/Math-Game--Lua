@@ -1,0 +1,63 @@
+local op_guipos = {}
+local card_guipos = {}
+local op_obj = {}
+local card_obj = {}
+local operation = {"+", "-", "/", "*", "^"}
+local card = {}
+
+function init(self)
+	math.randomseed(os.time())
+	op_obj[1] = gui.get_node("operation1")
+	--print("ID: " .. gui.get_id(op_obj[1]))
+	
+	for x = 2, 5 do
+		op_obj[x] = gui.clone(op_obj[1])
+		gui.set_id(op_obj[x], "operation" .. x)
+		--print("ID" .. x .. ": " .. gui.get_id(op_obj[x]))
+		gui.set_text(op_obj[x], operation[x])
+	end
+	
+	for y = 1, 6 do
+		card_obj[y] = gui.clone(op_obj[1])
+		gui.set_id(card_obj[y], "card" .. y)
+		gui.set_color(card_obj[y], vmath.vector3(0,0,0))
+		--card[y] = math.random(100)
+		--gui.set_text(card_obj[y], card[y])
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("op_position") then
+		--print("ID" .. message[2] .. ": " .. message[1])
+		op_guipos[message[2]] = message[1]
+		--print(message[1])
+		gui.set_position(op_obj[message[2]], op_guipos[message[2]])
+	elseif message_id == hash("card_position") then
+		--print("Card" .. message[2] .. ": " .. message[1])
+		card_guipos[message[2]] = message[1]
+		gui.set_position(card_obj[message[2]], card_guipos[message[2]])
+	end
+	if message_id == hash("card_number") then
+		card[message[2]] = message[1]
+		gui.set_text(card_obj[message[2]], card[message[2]])
+	end
+	if message_id == hash("solved") then
+		print("ASDASD")
+		gui.delete_node(gui.get_node("card" .. message[1]))
+		gui.delete_node(gui.get_node("card" .. message[2]))
+		--gui.set_position(card_obj[message[1]], vmath.vector3(0, 0, -1))
+		--gui.set_position(card_obj[message[2]], vmath.vector3(0, 0, -1))
+		card_obj[message[4]] = gui.clone(op_obj[1])
+		gui.set_id(card_obj[message[4]], "card" .. message[4])
+		gui.set_color(card_obj[message[4]], vmath.vector3(0,0,0))
+		card[message[4]] = message[3]
+		gui.set_text(card_obj[message[4]], card[message[4]])
+	end
+end
+
+function update(self, dt)
+	--[[for x = 1, 5 do
+		print("*ID" .. x .. ": " .. gui.get_id(obj[x]))
+		gui.set_position(obj[x], guipos[x])
+	end--]]
+end

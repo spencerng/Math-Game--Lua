@@ -1,0 +1,36 @@
+images {
+  image: "/main/images/background.png"
+}
+images {
+  image: "/main/images/card1.png"
+}
+images {
+  image: "/main/images/cardholder.png"
+}
+images {
+  image: "/main/images/deck.png"
+}
+images {
+  image: "/main/images/operation.png"
+}
+images {
+  image: "/main/images/operationholder.png"
+}
+images {
+  image: "/main/images/answer.png"
+}
+images {
+  image: "/main/images/answer_back.png"
+}
+images {
+  image: "/main/images/correct.png"
+}
+images {
+  image: "/main/images/incorrect.png"
+}
+images {
+  image: "/main/images/start_menu.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

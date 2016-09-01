@@ -1,5 +1,5 @@
 [project]
-title = My project
+title = Math Games
 version = 0.1
 
 [bootstrap]
@@ -9,7 +9,7 @@ main_collection = /main/main.collectionc
 game_binding = /input/game.input_bindingc
 
 [display]
-width = 1280
+width = 1154
 height = 720
 
 [physics]
@@ -17,4 +17,7 @@ scale = 0.02
 
 [script]
 shared_state = 1
+
+[sprite]
+max_count = 512
 

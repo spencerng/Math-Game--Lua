@@ -1,0 +1,8 @@
+function init(self)
+ local position = go.get_position()
+	 --print("position: ".. position)
+	 local opholder = msg.url("/board/board#script")
+	 msg.post(opholder, "op_position", {position})
+	 --print(position)
+end
+
