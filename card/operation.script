@@ -19,7 +19,7 @@ function on_input(self, action_id, action)
        			if x + 50 < pos.x or x - 50 > pos.x or y + 50 < pos.y or y - 50 > pos.y then
             		-- outside board.
         		else
-        			print(go.get_id())
+        			--print(go.get_id())
 					id = go.get_id()
 				end        		
               
@@ -43,12 +43,7 @@ function on_input(self, action_id, action)
     end
 end
 
---function update(self, dt)
---	 local position = go.get_position()
---	 local operation = msg.url("main:/operation/operation#script")
---	 msg.post(operation, "op_position", {position})
-	 --print(position)
---end
+
 
 
 

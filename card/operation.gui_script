@@ -28,12 +28,9 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("op_position") then
-		--print("ID" .. message[2] .. ": " .. message[1])
 		op_guipos[message[2]] = message[1]
-		--print(message[1])
 		gui.set_position(op_obj[message[2]], op_guipos[message[2]])
 	elseif message_id == hash("card_position") then
-		--print("Card" .. message[2] .. ": " .. message[1])
 		card_guipos[message[2]] = message[1]
 		gui.set_position(card_obj[message[2]], card_guipos[message[2]])
 	end
@@ -45,8 +42,6 @@ function on_message(self, message_id, message, sender)
 		print("ASDASD")
 		gui.delete_node(gui.get_node("card" .. message[1]))
 		gui.delete_node(gui.get_node("card" .. message[2]))
-		--gui.set_position(card_obj[message[1]], vmath.vector3(0, 0, -1))
-		--gui.set_position(card_obj[message[2]], vmath.vector3(0, 0, -1))
 		card_obj[message[4]] = gui.clone(op_obj[1])
 		gui.set_id(card_obj[message[4]], "card" .. message[4])
 		gui.set_color(card_obj[message[4]], vmath.vector3(0,0,0))
@@ -55,9 +50,3 @@ function on_message(self, message_id, message, sender)
 	end
 end
 
-function update(self, dt)
-	--[[for x = 1, 5 do
-		print("*ID" .. x .. ": " .. gui.get_id(obj[x]))
-		gui.set_position(obj[x], guipos[x])
-	end--]]
-end

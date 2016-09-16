@@ -31,6 +31,30 @@ images {
 images {
   image: "/main/images/start_menu.png"
 }
+images {
+  image: "/main/images/answerkey.png"
+}
+images {
+  image: "/main/images/mute.png"
+}
+images {
+  image: "/main/images/pause.png"
+}
+images {
+  image: "/main/images/restart.png"
+}
+images {
+  image: "/main/images/scoreboard.png"
+}
+images {
+  image: "/main/images/timer.png"
+}
+images {
+  image: "/main/images/verify.png"
+}
+images {
+  image: "/main/images/exit.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0
