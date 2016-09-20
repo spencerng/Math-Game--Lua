@@ -14,28 +14,28 @@ local connectflag = {0, 0, 0}
 local hold = {0, 0, 0}
 
 function init(self)
-	local x = 1
-	local y = 1
-	self.op = {}
-	self.card = {}
-	self.result = {}
+	--local x = 1
+	--local y = 1
+	self.op = {} -- Array to Reference all the Properties of an Object given Index
+	self.card = {} -- Original Set of Cards
+	self.result = {}  -- New Cards created ingame
 	
-	msg.post("controller#gui", "hide")
-	msg.post("game#gui", "hide")
+	msg.post("controller#gui", "hide") -- Board is hidden when game begins
+	msg.post("game#gui", "hide") -- Game Features hidden when game begins
 end
 
-function start_game(self)
-	msg.post("game#gui", "show")
+function start_game(self) -- sets up game by creating cards and operations
+	msg.post("game#gui", "show") -- Game Features are shown
 	for x = 1,numofoperations do
         --print(x)
-        o = operations[x]
+        o = operations[x] -- takes operations from list/array of operations
         local id = factory.create("#operationfactory", vmath.vector3(100 + (125*x), 75, 0.6), nil, { operation = o })
         self.op[x] = {id = id, operation = o, x = 100 + (125*x), y = 75, connect = 0}
-    end
+    end -- Creates Operations and stores properties in self.op array
     
     math.randomseed(os.time()) -- random initialize
     for y = 1, numofcards do
-     	cardnum[y] = math.random(25)
+     	cardnum[y] = math.random(25) --stores random values into an array that contains the numbers of each car
     end
     for y = 1,numofcards do
      	local id = factory.create("#cardfactory", vmath.vector3((130*y), 580, 0.6), nil, {number = hash(cardnum[y]) })
@@ -44,23 +44,21 @@ function start_game(self)
 		msg.post(operationgui, "card_number", {self.card[y].card, y})
      	
      	print("rand " .. y .. ":" .. self.card[y].card)
-    end
-   	check_exist(self.card[2].exist)
+    end -- Creates Cards and stores properties in self.card array
 end
 
-function check_exist (e)
-	if e == 1 then
-		print("YAAAASSS")
-	end
+function delete_object(a, self)
+	go.delete("/instance" .. a + 4) --deletes instance of object
+    self.card[a].exist = 0 --tells property array that the card doesn't exist
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("start_game") then
 		start_game(self)
-	end
+	end -- Sees if game is started and then calls start_game function
     if message_id == hash("op_position") then
        	opholderpos = message[1]
-       	--pprint(opholderpos)
+       	--gets the position of operation holder
     elseif message_id == hash("card_position") then
     	if cardholderflag == 0 then
     		cardholderpos = message[1]
@@ -69,74 +67,68 @@ function on_message(self, message_id, message, sender)
     		cardholderpos2 = message[1]
     		cardholderflag = 0
     	end
-    end
+    end -- gets positions of both card holders
+    
     if message_id == hash("solved") then
-    	--print(hold[1])
     	go.set_position(vmath.vector3(100 + (125 * hold[1]), 75, 0.6), "/instance" .. hold[1] - 1)
-    	--go.delete("/instance" .. hold[1])
-    	go.delete("/instance" .. hold[2] + 4)
-    	go.delete("/instance" .. hold[3] + 4)
-    	-- REMEMBER -> SEND MESSAGE TO GUI TO DELETE NUMBERS
-    	self.card[hold[2]].exist = 0;
-    	self.card[hold[3]].exist = 0;
+    	delete_object(hold[2], self)
+    	delete_object(hold[3], self)
     	new = new + 1
     	local id = factory.create("#cardfactory", vmath.vector3((130*hold[2]), 580, 0.6), nil, {number = hash(message[1]) })
      	self.card[new] = {id = id, card = cardnum[new], x = (130*hold[2]), y = 580, connect = 0, exist = 1}
-     	cardnum[new] = message[1]
-    	msg.post("board#gui", "solved", {hold[2], hold[3], message[1], new})
-    	msg.post("controller#gui", "hide")
+     	cardnum[new] = message[1] -- creates new card and saves the number in cardnum
+    	msg.post("board#gui", "solved", {hold[2], hold[3], message[1], new}) --sends card gui all the properties of newly created card
+    	msg.post("controller#gui", "hide") -- hides solve gui
     	for x = 1, 3 do
     		connectflag[x] = 0
     		hold[x] = 0
-    	end
+    	end -- resets connect flags
     end
 end
 
 function update(self, dt)
 	for a = 1, numofoperations do
-		local operationposition = go.get_position(self.op[a].id)
+		local operationposition = go.get_position(self.op[a].id) -- gets position of the operation
 		local operationgui = msg.url("board#gui") -- send index a-1
 		
-		msg.post(operationgui, "op_position", {operationposition, a})
+		msg.post(operationgui, "op_position", {operationposition, a}) -- sends position of operation to operation gui
 	end
 	
 	for b = 1, new do
 		if self.card[b].exist == 1 then
-			local cardposition = go.get_position(self.card[b].id)
+			local cardposition = go.get_position(self.card[b].id) -- get card postion
 			local cardgui = msg.url("board#gui")
-			msg.post(cardgui, "card_position", {cardposition, b})
+			msg.post(cardgui, "card_position", {cardposition, b}) -- sends position for card gui
 		end
 	end
 
 	for x = 1, numofoperations do
 		if(connectflag[1] == 0) then
 			oppos = go.get_position(self.op[x].id)
-			if((oppos.x < opholderpos.x + 50 and oppos.x > opholderpos.x - 50) and (oppos.y < opholderpos.y + 50 and oppos.y > opholderpos.y - 50)) then
+			if((oppos.x < opholderpos.x + 50 and oppos.x > opholderpos.x - 50) and (oppos.y < opholderpos.y + 50 and oppos.y > opholderpos.y - 50)) then --checks if operation is near operation holder
 			 	oppos = opholderpos
-			 	go.set_position(oppos, self.op[x].id)
-			 	connectflag[1] = 1
-			 	hold[1] = x
+			 	go.set_position(oppos, self.op[x].id) -- sets position of operation to operation holder
+			 	connectflag[1] = 1 -- "connects" operation with operation holder
+			 	hold[1] = x -- saves index of operation that is connected
 			end
 		end
 	end
 
-	--print(cardholderpos)
-	--print(cardholderpos2)
 	 
 	 for y = 1, new do
 	 	if self.card[y].exist == 1 then
 		 	if(connectflag[2] == 0)then
-		 		cardpos = go.get_position(self.card[y].id)
+		 		cardpos = go.get_position(self.card[y].id) --gets position of card to compare to card holder1
 		 	end
 		 	if(connectflag[3] == 0) then
-		 		cardpos2 = go.get_position(self.card[y].id)
+		 		cardpos2 = go.get_position(self.card[y].id) -- gets position of card to compare to card holder2
 		 	end
 		 	
-		 	if((cardpos.x < cardholderpos.x + 80 and cardpos.x > cardholderpos.x - 80) and (cardpos.y < cardholderpos.y + 50 and cardpos.y > cardholderpos.y - 50) and (connectflag[2] == 0)) then
+		 	if((cardpos.x < cardholderpos.x + 80 and cardpos.x > cardholderpos.x - 80) and (cardpos.y < cardholderpos.y + 50 and cardpos.y > cardholderpos.y - 50) and (connectflag[2] == 0)) then --checks if card is in range with holder
 		 		cardpos = cardholderpos
 		 		go.set_position(cardpos, self.card[y].id)
-		 		connectflag[2] = 1
-		 		hold[2] = y
+		 		connectflag[2] = 1 --connect
+		 		hold[2] = y -- stores index
 		 	elseif((cardpos2.x < cardholderpos2.x + 80 and cardpos2.x > cardholderpos2.x - 80) and (cardpos2.y < cardholderpos2.y + 50 and cardpos2.y > cardholderpos2.y - 50) and (connectflag[3] == 0)) then
 		 		cardpos2 = cardholderpos2
 		 		go.set_position(cardpos2, self.card[y].id)
@@ -146,7 +138,7 @@ function update(self, dt)
 	 	end
 	 end
 	 if(hold[1] > 0) then
-	 	go.set_position(oppos, self.op[hold[1]].id)
+	 	go.set_position(oppos, self.op[hold[1]].id) --as long as a card is connected to holder, keep it locked
 	 end
 	 if(hold[2] > 0) then
 	 	go.set_position(cardpos, self.card[hold[2]].id)
@@ -157,5 +149,5 @@ function update(self, dt)
 	 if(connectflag[1] == 1 and connectflag[2] == 1 and connectflag[3] == 1) then
 	 	local solvegui = msg.url("controller#gui")
 		msg.post(solvegui, "solve_components", {operations[hold[1]], cardnum[hold[2]], cardnum[hold[3]]})
-	 end
+	 end --if all holders are connected, then enable solve gui
 end

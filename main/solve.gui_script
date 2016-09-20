@@ -59,6 +59,6 @@ function on_message(self, message_id, message, sender)
         --local text = gui.get_text(node)
         --text = solution
         --gui.set_text(node, text)
-       	print(solution)
+       	--print(solution)
    	end
 end
