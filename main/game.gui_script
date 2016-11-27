@@ -23,6 +23,20 @@ function update(self, dt)
 	clock(self)
 end
 
+function on_input(self, action_id, action)
+    if action_id == hash("drag") and action.pressed then
+        local exit = gui.get_node("exit")
+
+        if gui.pick_node(exit, action.x, action.y) then
+            local board = msg.url("/board/board#script")
+	 		msg.post(board, "end_game")
+	 		msg.post("#", "disable")
+        	msg.post(".", "release_input_focus")
+        end
+    end
+
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("hide") then
 		msg.post("#", "disable")

@@ -21,7 +21,7 @@ collection_instances {
 }
 scale_along_z: 0
 embedded_instances {
-  id: "start_menu"
+  id: "start"
   data: "components {\n"
   "  id: \"gui\"\n"
   "  component: \"/main/main_menu.gui\"\n"

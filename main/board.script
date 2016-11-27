@@ -52,9 +52,25 @@ function delete_object(a, self)
     self.card[a].exist = 0 --tells property array that the card doesn't exist
 end
 
+function end_game(self)
+	for b = 0, numofoperations do
+		go.delete("/instance" .. b) --deletes instance of object
+	end
+	for b = 1, new do
+		if self.card[b].exist == 1 then
+			delete_object(b, self)
+		end
+	end
+	msg.post("/start#gui", "show")
+	print("MARKER")
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("start_game") then
 		start_game(self)
+	end -- Sees if game is started and then calls start_game function
+	if message_id == hash("end_game") then
+		end_game(self)
 	end -- Sees if game is started and then calls start_game function
     if message_id == hash("op_position") then
        	opholderpos = message[1]
