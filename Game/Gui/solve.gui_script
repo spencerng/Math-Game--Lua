@@ -1,0 +1,90 @@
+local num1
+local num2
+local text
+local operation
+local solution
+local cards = {}
+
+-- Deals with Solving process
+
+function init(self)
+   msg.post("#", "disable")
+   msg.post(".", "release_input_focus")
+end
+
+function reset(self)
+	num1 = nil
+	num2 = nil
+	operation = nil
+	msg.post("#", "disable")
+    msg.post(".", "release_input_focus")
+end
+
+function on_input(self, action_id, action)
+        if action_id == hash("solve") then
+                -- Concatenate the input character to the "text" node...
+                local node = gui.get_node("text")
+                text = gui.get_text(node)
+                text = text .. action.text
+                gui.set_text(node, text)
+        end
+        if action_id == hash("enter") then
+        	if text == tostring(solution) then
+        		--notify everyone that the numbers have been solved
+        		msg.post("/game/Board/Deck#script", "solved", {solution})
+        		msg.post("/game/Board/Operations#script", "recall", {solution})
+        		msg.post("/game/Board/Board#script", "unconnect", {solution})
+        		
+        		--closes gui
+        		text = ""
+        		local node = gui.get_node("text")
+        		gui.set_text(node, text)
+        		reset(self)
+        	else
+        		--notify everyone that wrong answer was submitted, recall cards
+        		msg.post("/game/Board/Deck#script", "recall", {solution})
+        		msg.post("/game/Board/Operations#script", "recall", {solution})
+        		msg.post("/game/Board/Board#script", "unconnect", {solution})
+        		text = ""
+        		local node = gui.get_node("text")
+        		gui.set_text(node, text)
+        		reset(self)
+        	end
+        end
+end
+
+function calculate(self)
+       	if(operation == hash("+"))then
+       		solution = num1 + num2
+       	elseif(operation == hash("*"))then
+       		solution = num1 * num2
+       	elseif(operation == hash("/"))then
+       		solution = num1 / num2
+      	elseif(operation == hash("-"))then
+      		solution = num1 - num2
+       	elseif(operation == hash("^"))then
+       		solution = num1 * num2 --exponent function to be implemented -> for loop multiply by itself
+       	end
+       	print("answer: " .. solution)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("solve") then
+       	msg.post("#", "enable")
+        msg.post(".", "acquire_input_focus")
+        num1 = message[1]
+        num2 = message[2]
+        calculate(self)
+        num1 = nil
+        num2 = nil
+    end
+    
+    if message_id == hash("operation") then
+        operation = message[1]
+    end
+    
+	if message_id == hash("hide") then
+		msg.post("#", "disable")
+        msg.post(".", "release_input_focus")
+	end
+end

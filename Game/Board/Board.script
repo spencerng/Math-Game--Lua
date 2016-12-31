@@ -1,0 +1,123 @@
+local Holder1_id
+local Holder2_id
+local opHolder_id
+local card_id
+local operation_id
+local connect = {}
+
+-- Board deals with all Board interactions
+
+function init(self)
+
+end
+
+function start_game(self) -- sets up game by creating cards and operations
+	-- Start_game
+	
+	-- Deck deals cards
+	local deck = msg.url("Deck#script")
+	msg.post(deck, "deal")
+	
+	local operations = msg.url("Operations#script")
+	msg.post(operations, "deal")
+	
+	local sidebar = msg.url("/game/Gui/sidebar#gui")
+	msg.post(sidebar, "show")
+	
+end
+
+function solve(self)
+	if connect[1] ~= nil and connect[2] ~= nil and connect[3] ~= nil then
+		local deck = msg.url("Deck#script")
+		local operations = msg.url("Operations#script")
+		msg.post(operations, "solve", {connect[3]})
+		msg.post(deck, "solve", {connect[1], connect[2]})
+	end
+end
+
+function snap(self) -- Area of Concern -> find better way of snapping, code is repetitive, pass in arguements instead of globals used?
+	local card_pos = go.get_position(card_id)
+	local operation_pos = go.get_position(operation_id)
+	local holder1_pos = go.get_position(Holder1_id)
+	local holder2_pos = go.get_position(Holder2_id)
+	local opHolder_pos = go.get_position(opHolder_id)
+	
+	if((card_pos.x < holder1_pos.x + 80 and card_pos.x > holder1_pos.x - 80) and (card_pos.y < holder1_pos.y + 50 and card_pos.y > holder1_pos.y - 50)) and connect[1] == nil then
+		go.set_position(holder1_pos, card_id)
+		connect[1] = card_id
+	elseif((card_pos.x < holder2_pos.x + 80 and card_pos.x > holder2_pos.x - 80) and (card_pos.y < holder2_pos.y + 50 and card_pos.y > holder2_pos.y - 50)) and connect[2] == nil then
+		go.set_position(holder2_pos, card_id)
+		connect[2] = card_id
+	elseif connect[1] == card_id then
+		connect[1] = nil
+	elseif connect[2] == card_id then
+		connect[2] = nil
+	end
+	
+	if((operation_pos.x < opHolder_pos.x + 50 and operation_pos.x > opHolder_pos.x - 50) and (operation_pos.y < opHolder_pos.y + 50 and operation_pos.y > opHolder_pos.y - 50)) and connect[3] == nil then
+		go.set_position(opHolder_pos, operation_id)
+		connect[3] = operation_id
+	elseif connect[3] == operation_id then
+		connect[3] = nil
+	end
+	
+	solve(self)
+end
+
+function update(self, dt)
+
+end
+
+function on_message(self, message_id, message, sender)
+   	 if message_id == hash("start") then
+     	print("START Game")
+     	start_game(self) -- add more options to change parameters/constructor, ex. start_game(self, difficulty, mode)
+     end
+     
+     if message_id == hash("Holder1") then
+     	Holder1_id = message[1]
+     end
+     
+     if message_id == hash("Holder2") then
+     	Holder2_id = message[1]
+     end
+     
+     if message_id == hash("opHolder") then
+     	opHolder_id = message[1]
+     end
+     
+     if message_id == hash("card_id") then
+     	card_id = message[1]
+     end
+     
+     if message_id == hash("card_released") then
+     	snap(self)
+     	if connect[1] ~= card_id and connect[2] ~= card_id then -- recall
+			go.set(card_id, "position", vmath.vector3(message[1], message[2], 1))
+		end
+		card_id = nil
+     end
+     
+     if message_id == hash("operation_id") then
+     	operation_id = message[1]
+     end
+     
+     if message_id == hash("operation_released") then
+     	snap(self)
+     	if connect[3] ~= operation_id then -- recall
+			go.set(operation_id, "position", vmath.vector3(message[1], message[2], 1))
+		end
+		operation_id = nil
+     end
+     
+     if message_id == hash("unconnect") then
+     	for x = 1, 3 do
+     		connect[x] = nil
+     	end
+     end
+     
+end
+
+function on_input(self, action_id, action)
+     
+end

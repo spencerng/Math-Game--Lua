@@ -1,6 +1,0 @@
-function init(self)
-    local position = go.get_position()
-	 --print("position: ".. position)
-	 local holder = msg.url("/board/board#script")
-	 msg.post(holder, "card_position", {position})
-end

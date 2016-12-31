@@ -1,0 +1,36 @@
+-- Starts Gui and allows input --
+function init(self)
+	msg.post("#", "disable")
+    msg.post(".", "release_input_focus")
+end
+
+-- Checks which button user pressed and sends them to either main menu or customization screen --
+function on_input(self, action_id, action)
+    if action_id == hash("drag") and action.pressed then
+        forward = gui.get_node("forward")
+        back = gui.get_node("back")
+
+        if gui.pick_node(forward, action.x, action.y) then
+            local game = msg.url("/game/Board/Board#script")
+	 		msg.post(game, "start") --To include more options to send
+	 		msg.post("#", "disable")
+        	msg.post(".", "release_input_focus")
+        end
+        
+        if gui.pick_node(back, action.x, action.y) then
+            local start = msg.url("/start/start#gui")
+	 		msg.post(start, "show")
+	 		msg.post("#", "disable")
+        	msg.post(".", "release_input_focus")
+        end
+    end
+end
+
+-- Shows gui --
+function on_message(self, message_id, message, sender)
+   if message_id == hash("show") then
+ 		print("SHOWN")
+       	msg.post("#", "enable")
+        msg.post(".", "acquire_input_focus")
+   	end
+end

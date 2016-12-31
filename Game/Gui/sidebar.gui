@@ -1,8 +1,4 @@
-script: "/main/game.gui_script"
-fonts {
-  name: "system_font"
-  font: "/builtins/fonts/system_font.font"
-}
+script: "/Game/Gui/sidebar.gui_script"
 textures {
   name: "sprites"
   texture: "/main/sprites.atlas"
@@ -15,8 +11,8 @@ background_color {
 }
 nodes {
   position {
-    x: 1005.7199
-    y: 615.77515
+    x: 1006.1535
+    y: 619.5627
     z: 0.0
     w: 1.0
   }
@@ -47,7 +43,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "sprites/scoreboard"
-  id: "score"
+  id: "scoreboard"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -69,8 +65,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1005.5606
-    y: 501.28372
+    x: 1006.7541
+    y: 501.74347
     z: 0.0
     w: 1.0
   }
@@ -101,7 +97,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "sprites/timer"
-  id: "time"
+  id: "clock"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -123,8 +119,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1051.604
-    y: 323.3578
+    x: 1053.4993
+    y: 331.34973
     z: 0.0
     w: 1.0
   }
@@ -177,8 +173,8 @@ nodes {
 }
 nodes {
   position {
-    x: 959.12604
-    y: 325.10263
+    x: 955.48517
+    y: 329.84183
     z: 0.0
     w: 1.0
   }
@@ -231,8 +227,8 @@ nodes {
 }
 nodes {
   position {
-    x: 959.12604
-    y: 400.13196
+    x: 953.9773
+    y: 409.761
     z: 0.0
     w: 1.0
   }
@@ -285,8 +281,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1051.604
-    y: 400.13196
+    x: 1053.4993
+    y: 409.761
     z: 0.0
     w: 1.0
   }
@@ -339,8 +335,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1003.0301
-    y: 171.17633
+    x: 1003.34033
+    y: 182.05539
     z: 0.0
     w: 1.0
   }
@@ -371,7 +367,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "sprites/answerkey"
-  id: "answerkey"
+  id: "answerback"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -393,8 +389,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1002.9026
-    y: 68.96902
+    x: 1001.91046
+    y: 67.465485
     z: 0.0
     w: 1.0
   }
@@ -443,258 +439,6 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 1002.42096
-    y: 171.8279
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 127.0
-    y: 146.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "sprites/cardholder"
-  id: "answer"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 1009.4578
-    y: 171.8279
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 3.0
-    y: 3.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "7"
-  font: "system_font"
-  id: "answer_text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  layer: ""
-  inherit_alpha: true
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 1010.9825
-    y: 610.8961
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 3.0
-    y: 3.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "1500"
-  font: "system_font"
-  id: "score_text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  layer: ""
-  inherit_alpha: true
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 1007.59204
-    y: 497.3148
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 3.0
-    y: 3.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "12:50"
-  font: "system_font"
-  id: "time_text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  layer: ""
-  inherit_alpha: true
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
   size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"

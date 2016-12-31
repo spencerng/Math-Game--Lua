@@ -1,25 +1,25 @@
 -- Starts Gui and allows input --
 function init(self)
-	msg.post("#", "enable")
-    msg.post(".", "acquire_input_focus")
+    msg.post("#", "disable")
+    msg.post(".", "release_input_focus")
 end
 
--- Checks which button user pressed and sends them to either lobby or customization screen --
+-- Checks which button user pressed and sends them to either main menu or customization screen --
 function on_input(self, action_id, action)
     if action_id == hash("drag") and action.pressed then
-        single = gui.get_node("Single")
-        multi = gui.get_node("Multi")
+        forward = gui.get_node("forward")
+        back = gui.get_node("back")
 
-        if gui.pick_node(single, action.x, action.y) then
+        if gui.pick_node(forward, action.x, action.y) then
             local custom = msg.url("/lobby/Customization/Custom#gui")
 	 		msg.post(custom, "show")
 	 		msg.post("#", "disable")
         	msg.post(".", "release_input_focus")
         end
         
-        if gui.pick_node(multi, action.x, action.y) then
-            local lobby = msg.url("/lobby/Lobby/Lobby#gui")
-	 		msg.post(lobby, "show")
+        if gui.pick_node(back, action.x, action.y) then
+            local start = msg.url("/start/start#gui")
+	 		msg.post(start, "show")
 	 		msg.post("#", "disable")
         	msg.post(".", "release_input_focus")
         end
@@ -28,10 +28,9 @@ end
 
 -- Shows gui --
 function on_message(self, message_id, message, sender)
- if message_id == hash("show") then
+   if message_id == hash("show") then
  		print("SHOWN")
        	msg.post("#", "enable")
         msg.post(".", "acquire_input_focus")
    	end
 end
-

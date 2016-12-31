@@ -1,7 +1,7 @@
 name: "default"
 collection_instances {
-  id: "game"
-  collection: "/main/game.collection"
+  id: "Customization"
+  collection: "/Lobby/Customization.collection"
   position {
     x: 0.0
     y: 0.0
@@ -20,28 +20,8 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "lobby"
-  collection: "/main/lobby.collection"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "start"
-  collection: "/main/start.collection"
+  id: "Lobby"
+  collection: "/Lobby/Lobby.collection"
   position {
     x: 0.0
     y: 0.0
