@@ -1,6 +1,9 @@
+local solution  
+
 function init(self)
     msg.post("#", "disable")
     msg.post(".", "release_input_focus")
+    pos = gui.get_position("solution")
 end
 
 function update(self, dt)
@@ -13,9 +16,16 @@ function on_message(self, message_id, message, sender)
        	msg.post("#", "enable")
         msg.post(".", "acquire_input_focus")
    end
+   
    if message_id == hash("hide") then
    		msg.post("#", "disable")
    		msg.post(".", "release_input_focus")
+   end
+   
+   if message_id == hash("solution") then
+   		solution = message[1]
+   		local solution = gui.get_node("solution_text")
+   		gui.set_text(solution, message[1])
    end
 end
 

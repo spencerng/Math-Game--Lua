@@ -29,14 +29,7 @@ function end_game(self) -- ends game by destroying objects
 	-- end_game
 	
 	-- Empties variables
-	Holder1_id = nil
-	Holder2_id = nil
-	opHolder_id = nil
-	card_id = nil
-	operation_id = nil
-	connect[1] = nil
-	connect[2] = nil
-	connect[3] = nil
+	empty_variables(self)
 	
 	-- Deck shuffles cards
 	local deck = msg.url("Deck#script")
@@ -50,6 +43,17 @@ function end_game(self) -- ends game by destroying objects
 
 	local main_menu = msg.url("/start/start#gui")
 	msg.post(main_menu, "show")
+end
+
+function empty_variables(self)
+	Holder1_id = nil
+	Holder2_id = nil
+	opHolder_id = nil
+	card_id = nil
+	operation_id = nil
+	connect[1] = nil
+	connect[2] = nil
+	connect[3] = nil
 end
 
 function solve(self)
@@ -121,6 +125,10 @@ function on_message(self, message_id, message, sender)
      	card_id = message[1]
      end
      
+     if message_id == hash("operation_id") then
+     	operation_id = message[1]
+     end
+     
      if message_id == hash("card_released") then
      	snap(self)
      	if connect[1] ~= card_id and connect[2] ~= card_id then -- recall
@@ -128,11 +136,7 @@ function on_message(self, message_id, message, sender)
 		end
 		card_id = nil
      end
-     
-     if message_id == hash("operation_id") then
-     	operation_id = message[1]
-     end
-     
+   
      if message_id == hash("operation_released") then
      	snap(self)
      	if connect[3] ~= operation_id then -- recall
