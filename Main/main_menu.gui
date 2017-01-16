@@ -1,10 +1,10 @@
-script: "/Lobby/lobby.gui_script"
+script: "/Main/main_menu.gui_script"
 fonts {
   name: "system_font"
   font: "/builtins/fonts/system_font.font"
 }
 textures {
-  name: "sprites"
+  name: "sprites1"
   texture: "/Main/sprites.atlas"
 }
 background_color {
@@ -26,8 +26,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1153.0
-    y: 719.0
+    x: 1159.0
+    y: 725.0
     w: 1.0
   }
   color {
@@ -36,29 +36,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  texture: "sprites/lobby_back"
-  id: "box"
+  texture: "sprites1/start_menu"
+  id: "background"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: 577.0
-    y: 360.0
+    x: 430.0
+    y: 260.0
     w: 1.0
   }
   rotation {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 1.5
+    y: 1.5
+    z: 1.5
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 126.0
+    y: 145.0
     w: 1.0
   }
   color {
@@ -67,7 +67,8 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  id: "Button"
+  texture: "sprites1/card1"
+  id: "Single"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -80,7 +81,7 @@ nodes {
   }
   scale {
     x: 1.0
-    y: 1.0
+    y: 1.5
     z: 1.0
     w: 1.0
   }
@@ -93,9 +94,9 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEXT
-  text: "LOBBY"
+  text: "Practice"
   font: "system_font"
-  id: "Placeholder"
+  id: "single_text"
   outline {
     x: 1.0
     y: 1.0
@@ -108,14 +109,86 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  parent: "Button"
+  parent: "Single"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: 1016.2605
-    y: 104.87395
+    x: 724.0
+    y: 260.0
+    w: 1.0
+  }
+  rotation {
+    w: 1.0
+  }
+  scale {
+    x: 1.5
+    y: 1.5
+    z: 1.5
+    w: 1.0
+  }
+  size {
+    x: 126.0
+    y: 145.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  texture: "sprites1/card1"
+  id: "Multi"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    w: 1.0
+  }
+  rotation {
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.5
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    w: 1.0
+  }
+  color {
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  text: "Multiplayer"
+  font: "system_font"
+  id: "Multi_text"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  parent: "Multi"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 1050.0
+    y: 90.0
     w: 1.0
   }
   rotation {
@@ -128,8 +201,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 151.0
-    y: 69.0
+    x: 60.0
+    y: 60.0
     w: 1.0
   }
   color {
@@ -138,39 +211,8 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  texture: "sprites/forward_arrow"
-  id: "forward"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 155.4874
-    y: 102.655464
-    w: 1.0
-  }
-  rotation {
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 151.0
-    y: 69.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  texture: "sprites/back_arrow"
-  id: "back"
+  texture: "sprites1/mute"
+  id: "box"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }

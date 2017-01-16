@@ -3,7 +3,7 @@ title = Math Games
 version = 0.1
 
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /Main/main.collectionc
 
 [input]
 game_binding = /input/game.input_bindingc
@@ -20,4 +20,7 @@ shared_state = 1
 
 [sprite]
 max_count = 512
+
+[android]
+package = com.MCA.mathgame
 

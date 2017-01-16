@@ -1,0 +1,28 @@
+name: "default"
+collection_instances {
+  id: "game"
+  collection: "/Main/game.collection"
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "lobby"
+  collection: "/Main/lobby.collection"
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "start"
+  collection: "/Main/start.collection"
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}

@@ -4,6 +4,7 @@ local opHolder_id
 local card_id
 local operation_id
 local connect = {}
+local card1, card2, holder = 1,2,3
 
 -- Board deals with all Board interactions
 
@@ -65,8 +66,33 @@ function solve(self)
 	end
 end
 
-function snap(self) -- Area of Concern -> find better way of snapping, code is repetitive, pass in arguements instead of globals used?
-	local card_pos = go.get_position(card_id)
+function snap(self, id1, r1, r2, var) -- Area of Concern -> find better way of snapping, code is repetitive, pass in arguements instead of globals used?
+	local p1 = go.get_position(id1)
+	local p2 = {go.get_position(Holder1_id), go.get_position(Holder2_id), go.get_position(opHolder_id)}
+	local id2 = nil
+	local type = 1;
+
+	if(p1.x < 300 and var == "card") then
+		type = 1
+		print("holder1")
+	elseif ((p1.x > 299 and p1.x < 650) and var == "op") then
+		type = 3
+		print("holder2")
+	elseif (p1.x > 649 and var == "card") then
+		type = 2
+		print("holder3")
+	end
+		
+	if((p1.x < p2[type].x + r1 and p1.x > p2[type].x - r1) and (p1.y < p2[type].y + r2 and p1.y > p2[type].y - r2)) and connect[type] == nil then
+		go.set_position(p2[type], id1)
+		connect[type] = id1
+	elseif connect[type] == id1 then
+		connect[type] = nil
+	else
+		print("Nothing")
+	end
+	
+	--[[local card_pos = go.get_position(card_id)
 	local operation_pos = go.get_position(operation_id)
 	local holder1_pos = go.get_position(Holder1_id)
 	local holder2_pos = go.get_position(Holder2_id)
@@ -89,7 +115,7 @@ function snap(self) -- Area of Concern -> find better way of snapping, code is r
 		connect[3] = operation_id
 	elseif connect[3] == operation_id then
 		connect[3] = nil
-	end
+	end--]]
 	
 	solve(self)
 end
@@ -130,7 +156,7 @@ function on_message(self, message_id, message, sender)
      end
      
      if message_id == hash("card_released") then
-     	snap(self)
+     	snap(self, card_id, 80, 50, "card")
      	if connect[1] ~= card_id and connect[2] ~= card_id then -- recall
 			go.set(card_id, "position", vmath.vector3(message[1], message[2], 1))
 		end
@@ -138,7 +164,7 @@ function on_message(self, message_id, message, sender)
      end
    
      if message_id == hash("operation_released") then
-     	snap(self)
+     	snap(self, operation_id, 50, 50, "op")
      	if connect[3] ~= operation_id then -- recall
 			go.set(operation_id, "position", vmath.vector3(message[1], message[2], 1))
 		end
