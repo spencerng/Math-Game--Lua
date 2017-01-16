@@ -3,7 +3,7 @@ local solution
 function init(self)
     msg.post("#", "disable")
     msg.post(".", "release_input_focus")
-    pos = gui.get_position("solution")
+    --pos = gui.get_position("solution")
 end
 
 function update(self, dt)
