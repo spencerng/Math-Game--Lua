@@ -1,9 +1,9 @@
+local numofops = 5
 local operation1
 
 --Operations deal with Operation Creation
 
 function deal_operations(self)
-	local numofops = 5
 	local operations = {hash("+"), hash("-"), hash("*"), hash("/"), hash("^")}
 	self.operation = {} -- Set of Operations
 	
@@ -11,6 +11,13 @@ function deal_operations(self)
      	local id = factory.create("#operationprototype", vmath.vector3(100 + (125*y), 75, 0.6), nil, {operation = operations[y], ix = 100 + (125*y), iy = 75})
     	self.operation[y] = {id = id, operation = operations[y], x = 100 + (125*y), y = 75, connect = 0, count = y}
     end 
+end
+
+function shuffle_operations(self)
+	for y = 1,numofops do
+		go.delete(self.operation[y].id)
+	end --deletes operations that still exist and empties the array
+	operation1 = nil
 end
 
 function match_operations(self, id1) --Sends the operations to solve gui
@@ -30,10 +37,17 @@ function on_message(self, message_id, message, sender)
    		print("Operations dealt")
    		deal_operations(self)
    end
+   
+    if message_id == hash("shuffle") then
+   		print("Operations shuffled")
+   		shuffle_operations(self)
+   end
+   
    if message_id == hash("solve") then
    		match_operations(self, message[1])
    		operation1 = message[1]
    end
+   
    if message_id == hash("recall") then
    		local count
    		for y = 1, table.getn(self.operation) do

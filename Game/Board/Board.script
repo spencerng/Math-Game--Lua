@@ -23,7 +23,33 @@ function start_game(self) -- sets up game by creating cards and operations
 	
 	local sidebar = msg.url("/game/Gui/sidebar#gui")
 	msg.post(sidebar, "show")
+end
+
+function end_game(self) -- ends game by destroying objects
+	-- end_game
 	
+	-- Empties variables
+	Holder1_id = nil
+	Holder2_id = nil
+	opHolder_id = nil
+	card_id = nil
+	operation_id = nil
+	connect[1] = nil
+	connect[2] = nil
+	connect[3] = nil
+	
+	-- Deck shuffles cards
+	local deck = msg.url("Deck#script")
+	msg.post(deck, "shuffle")
+	
+	local operations = msg.url("Operations#script")
+	msg.post(operations, "shuffle")
+	
+	local sidebar = msg.url("/game/Gui/sidebar#gui")
+	msg.post(sidebar, "hide")
+
+	local main_menu = msg.url("/start/start#gui")
+	msg.post(main_menu, "show")
 end
 
 function solve(self)
@@ -72,6 +98,11 @@ function on_message(self, message_id, message, sender)
    	 if message_id == hash("start") then
      	print("START Game")
      	start_game(self) -- add more options to change parameters/constructor, ex. start_game(self, difficulty, mode)
+     end
+     
+     if message_id == hash("end") then
+     	print("END Game")
+     	end_game(self)
      end
      
      if message_id == hash("Holder1") then

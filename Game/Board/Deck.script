@@ -15,6 +15,17 @@ function deal_cards(self)
     end -- Creates Cards and stores properties in self.card array
 end
 
+function shuffle_cards(self)
+	for y = 1,numofcards do
+		if self.card[y].exist == 1 then
+			go.delete(self.card[y].id)
+			self.card[y] = nil
+		end
+	end --deletes cards that still exist and empties the array
+	card1 = nil
+	card2 = nil
+end
+
 function new_card(self, solution)
 	--gets the count of the old card
 	local new_count = 0
@@ -67,14 +78,22 @@ function on_message(self, message_id, message, sender)
    		print("Cards dealt")
    		deal_cards(self)
    end
+   
+   if message_id == hash("shuffle") then
+   		print("Cards shuffled")
+   		shuffle_cards(self)
+   end
+   
    if message_id == hash("solve") then
    		match_cards(self, message[1], message[2])
    		card1 = message[1]
    		card2 = message[2]
    end
+   
    if message_id == hash("solved") then -- solved
    		new_card(self, message[1]) 
    end
+   
    if message_id == hash("recall") then -- recall, sends everything back
    		local count1
    		local count2
