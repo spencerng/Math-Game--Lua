@@ -22,12 +22,12 @@ function on_message(self, message_id, message, sender)
    		msg.post(".", "release_input_focus")
    end
    
-   if message_id == hash("solution") then
+   --[[if message_id == hash("solution") then
    		solution = message[1]
    		local solution = gui.get_node("solution_text")
    		gui.set_text(solution, message[1])
    		msg.post("/game/Board/Board#script", "solHolder", {gui.get_position(gui.get_node("solution"))}) -- sends position of solution holder
-   end
+   end--]]
 end
 
 function on_input(self, action_id, action)

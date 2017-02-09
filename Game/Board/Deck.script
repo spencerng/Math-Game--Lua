@@ -16,8 +16,10 @@ function deal_cards(self)
     end -- Creates Cards and stores properties in self.card array
     
     --Send solution to sidebar
-    local sidebar = msg.url("/game/Gui/sidebar#gui")
-	msg.post(sidebar, "solution", {solution})
+    local sol = msg.url("Verify/V_Holder#script")
+    local verify = msg.url("Verify/Verify#script")
+	msg.post(sol, "solution", {solution})
+	msg.post(verify, "solution", {solution})
 end
 
 function shuffle_cards(self)

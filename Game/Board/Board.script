@@ -1,7 +1,7 @@
 local Holder1_id
 local Holder2_id
 local opHolder_id
-local solHolder_pos
+local solHolder_id
 local card_id
 local operation_id
 local connect = {}
@@ -50,7 +50,7 @@ end
 function empty_variables(self)
 	--Holder1_id = nil
 	--Holder2_id = nil
-	opHolder_id = nil
+	--opHolder_id = nil
 	card_id = nil
 	operation_id = nil
 	connect[1] = nil
@@ -69,7 +69,7 @@ end
 
 function snap(self, id1, r1, r2, var)
 	local p1 = go.get_position(id1)
-	local p2 = {go.get_position(Holder1_id), go.get_position(Holder2_id), go.get_position(opHolder_id), solHolder_pos}
+	local p2 = {go.get_position(Holder1_id), go.get_position(Holder2_id), go.get_position(opHolder_id), go.get_position(solHolder_id)}
 	local id2 = nil
 	local type = 1;
 
@@ -152,8 +152,8 @@ function on_message(self, message_id, message, sender)
      end
      
      if message_id == hash("solHolder") then
-     	solHolder_pos = message[1]
-     	print(solHolder_pos)
+     	solHolder_id = message[1]
+     	print(solHolder_id)
      end
      
      if message_id == hash("card_id") then
