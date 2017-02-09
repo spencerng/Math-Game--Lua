@@ -15,6 +15,7 @@ function deal_cards(self)
      	self.card[y] = {id = id, number = cardnum[y], x = (130*y), y = 580, count = y, connect = 0, exist = 1}
     end -- Creates Cards and stores properties in self.card array
     
+    --Send solution to sidebar
     local sidebar = msg.url("/game/Gui/sidebar#gui")
 	msg.post(sidebar, "solution", {solution})
 end

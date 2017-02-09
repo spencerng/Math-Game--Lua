@@ -1,6 +1,7 @@
 local Holder1_id
 local Holder2_id
 local opHolder_id
+local solHolder_pos
 local card_id
 local operation_id
 local connect = {}
@@ -47,8 +48,8 @@ function end_game(self) -- ends game by destroying objects
 end
 
 function empty_variables(self)
-	Holder1_id = nil
-	Holder2_id = nil
+	--Holder1_id = nil
+	--Holder2_id = nil
 	opHolder_id = nil
 	card_id = nil
 	operation_id = nil
@@ -66,9 +67,9 @@ function solve(self)
 	end
 end
 
-function snap(self, id1, r1, r2, var) -- Area of Concern -> find better way of snapping, code is repetitive, pass in arguements instead of globals used?
+function snap(self, id1, r1, r2, var)
 	local p1 = go.get_position(id1)
-	local p2 = {go.get_position(Holder1_id), go.get_position(Holder2_id), go.get_position(opHolder_id)}
+	local p2 = {go.get_position(Holder1_id), go.get_position(Holder2_id), go.get_position(opHolder_id), solHolder_pos}
 	local id2 = nil
 	local type = 1;
 
@@ -78,9 +79,12 @@ function snap(self, id1, r1, r2, var) -- Area of Concern -> find better way of s
 	elseif ((p1.x > 299 and p1.x < 650) and var == "op") then
 		type = 3
 		print("holder2")
-	elseif (p1.x > 649 and var == "card") then
+	elseif ((p1.x > 649 and p1.x < 800) and var == "card") then
 		type = 2
 		print("holder3")
+	elseif (p1.x > 800 and var == "card") then
+		type = 4
+		print("holder4")
 	end
 		
 	if((p1.x < p2[type].x + r1 and p1.x > p2[type].x - r1) and (p1.y < p2[type].y + r2 and p1.y > p2[type].y - r2)) and connect[type] == nil then
@@ -147,6 +151,11 @@ function on_message(self, message_id, message, sender)
      	opHolder_id = message[1]
      end
      
+     if message_id == hash("solHolder") then
+     	solHolder_pos = message[1]
+     	print(solHolder_pos)
+     end
+     
      if message_id == hash("card_id") then
      	card_id = message[1]
      end
@@ -157,7 +166,7 @@ function on_message(self, message_id, message, sender)
      
      if message_id == hash("card_released") then
      	snap(self, card_id, 80, 50, "card")
-     	if connect[1] ~= card_id and connect[2] ~= card_id then -- recall
+     	if connect[1] ~= card_id and connect[2] ~= card_id and connect[4] ~= card_id then -- recall
 			go.set(card_id, "position", vmath.vector3(message[1], message[2], 1))
 		end
 		card_id = nil

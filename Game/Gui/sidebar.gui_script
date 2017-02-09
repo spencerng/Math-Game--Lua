@@ -26,6 +26,7 @@ function on_message(self, message_id, message, sender)
    		solution = message[1]
    		local solution = gui.get_node("solution_text")
    		gui.set_text(solution, message[1])
+   		msg.post("/game/Board/Board#script", "solHolder", {gui.get_position(gui.get_node("solution"))}) -- sends position of solution holder
    end
 end
 
