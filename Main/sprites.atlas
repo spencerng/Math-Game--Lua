@@ -67,3 +67,12 @@ images {
 images {
   image: "/Main/images/forward_arrow.png"
 }
+images {
+  image: "/Main/images/checkbox.png"
+}
+images {
+  image: "/Main/images/customization_back.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
