@@ -1,0 +1,121 @@
+local numofcards = 6
+local card1
+local card2
+
+-- Deck deals with Card Creation
+
+function deal_cards(self)
+	self.card = {} -- Original Set of Cards
+	cardnum = {9, 12, 15, 18, 21, 24}
+	-- A function, number_generation will be created by Poojit/Kunal or function called recieve cards will get cards/solution from JSON
+	solution = 1 -- solution will be sent from database 
+	
+	for y = 1,numofcards do
+     	local id = factory.create("#cardprototype", vmath.vector3((130*y), 580, 0.6), nil, {number = cardnum[y], ix = (130*y), iy = 580})
+     	self.card[y] = {id = id, number = cardnum[y], x = (130*y), y = 580, count = y, connect = 0, exist = 1}
+    end -- Creates Cards and stores properties in self.card array
+    
+    --Send solution to sidebar
+    local sol = msg.url("Verify/V_Holder#script")
+    local verify = msg.url("Verify/Verify#script")
+	msg.post(sol, "solution", {solution})
+	msg.post(verify, "solution", {solution})
+end
+
+function shuffle_cards(self)
+	for y = 1,numofcards do
+		if self.card[y].exist == 1 then
+			go.delete(self.card[y].id)
+			self.card[y] = nil
+		end
+	end --deletes cards that still exist and empties the array
+	card1 = nil
+	card2 = nil
+end
+
+function new_card(self, solution)
+	--gets the count of the old card
+	local new_count = 0
+	local new_count2 = 0
+	for y = 1, table.getn(self.card) do
+		if card1 == self.card[y].id then
+			new_count = self.card[y].count
+		end
+		if card2 == self.card[y].id then
+			new_count2 = self.card[y].count
+		end
+	end
+
+	--delete old cards
+	go.delete(card1)
+	go.delete(card2)
+	card1 = nil
+	card2 = nil
+	
+	--creates the new card
+	local id = factory.create("#cardprototype", vmath.vector3((130*new_count), 580, 0.6), nil, {number = solution, ix = (130*new_count), iy = 580})
+    self.card[new_count] = {id = id, number = solution, x = (130*new_count), y = 580, count = new_count, connect = 0, exist = 1}
+    self.card[new_count2] = {id = nil, number = solution, x = (130*new_count), y = 580, count = new_count, connect = 0, exist = 0}
+	print("creating".. self.card[new_count].id)
+	print("number".. self.card[new_count].number)
+end
+
+function match_cards(self, id1, id2, op) --Sends the numbers of the cards to solve gui
+	for y = 1, table.getn(self.card) do
+		if id1 == self.card[y].id then
+			num1 = self.card[y].number
+			print("num1 ".. num1)
+		end
+		if id2 == self.card[y].id then
+			num2 = self.card[y].number
+			print("num2 " .. num2)
+		end
+	end
+
+	local solve = msg.url("/game/Gui/solve#gui")
+	msg.post(solve, "solve", {num1, num2, op})
+end
+
+function number_generation()
+	--Insert Code Here
+end
+
+function on_message(self, message_id, message, sender)
+   if message_id == hash("deal") then
+   		print("Cards dealt")
+   		deal_cards(self)
+   end
+   
+   if message_id == hash("shuffle") then
+   		print("Cards shuffled")
+   		shuffle_cards(self)
+   end
+   
+   if message_id == hash("solve") then
+   		match_cards(self, message[1], message[2])
+   		card1 = message[1]
+   		card2 = message[2]
+   end
+   
+   if message_id == hash("solved") then -- solved
+   		new_card(self, message[1]) 
+   end
+   
+   if message_id == hash("recall") then -- recall, sends everything back
+   		local count1
+   		local count2
+   		for y = 1, table.getn(self.card) do
+			if card1 == self.card[y].id then
+				count1 = self.card[y].count
+			end
+			if card2 == self.card[y].id then
+				count2 = self.card[y].count
+			end
+		end
+   		go.set(card1, "position", vmath.vector3(self.card[count1].x, self.card[count1].y, 1))
+   		go.set(card2, "position", vmath.vector3(self.card[count2].x, self.card[count2].y, 1))  
+   		card1 = nil
+   		card2 = nil
+   end
+end
+

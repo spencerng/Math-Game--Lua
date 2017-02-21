@@ -1,0 +1,78 @@
+images {
+  image: "/Main/images/answer.png"
+}
+images {
+  image: "/Main/images/answer_back.png"
+}
+images {
+  image: "/Main/images/answerkey.png"
+}
+images {
+  image: "/Main/images/background.png"
+}
+images {
+  image: "/Main/images/card1.png"
+}
+images {
+  image: "/Main/images/cardholder.png"
+}
+images {
+  image: "/Main/images/correct.png"
+}
+images {
+  image: "/Main/images/deck.png"
+}
+images {
+  image: "/Main/images/exit.png"
+}
+images {
+  image: "/Main/images/incorrect.png"
+}
+images {
+  image: "/Main/images/mute.png"
+}
+images {
+  image: "/Main/images/operation.png"
+}
+images {
+  image: "/Main/images/operationholder.png"
+}
+images {
+  image: "/builtins/graphics/particle_blob.png"
+}
+images {
+  image: "/Main/images/pause.png"
+}
+images {
+  image: "/Main/images/restart.png"
+}
+images {
+  image: "/Main/images/scoreboard.png"
+}
+images {
+  image: "/Main/images/start_menu.png"
+}
+images {
+  image: "/Main/images/timer.png"
+}
+images {
+  image: "/Main/images/verify.png"
+}
+images {
+  image: "/Main/images/lobby_back.png"
+}
+images {
+  image: "/Main/images/back_arrow.png"
+}
+images {
+  image: "/Main/images/forward_arrow.png"
+}
+images {
+  image: "/Main/images/checkbox.png"
+}
+images {
+  image: "/Main/images/customization_back.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

@@ -1,0 +1,47 @@
+go.property("number", 1) -- default number is 1
+go.property("ix", 0) -- Initial Position x
+go.property("iy", 0) -- Initial Position y
+
+local id
+
+function init(self)
+	label.set_text("#number", self.number)
+	msg.post(".", "acquire_input_focus")
+	print("card " .. ":" .. self.number)
+end
+
+function on_input(self, action_id, action)
+		if action_id == hash("drag") and action.pressed then
+			local pos = go.get_position()
+            local x = action.x
+        	local y = action.y
+        	
+        	self.dragging = true
+        	
+       		if x + 50 < pos.x or x - 50 > pos.x or y + 50 < pos.y or y - 50 > pos.y then --card "hit box"
+            	-- outside board.
+        	else
+				id = go.get_id()
+			end       
+			
+        elseif action_id == hash("drag") and action.value == 1 then	
+              	if id == go.get_id() then              	
+			        local pos = go.get_position()
+			        pos.x = action.x
+			        pos.y = action.y
+			        go.set_position(pos)
+			            
+			        local board = msg.url("/game/Board/Board#script")
+					msg.post(board, "card_id", {id})
+			    end
+			    		        
+	    elseif action_id == hash("drag") and action.released then
+	        -- Player released touch.
+	        if id == go.get_id() then
+	        	id = nil
+	        	self.dragging = false
+	        	local board = msg.url("/game/Board/Board#script")
+				msg.post(board, "card_released", {self.ix, self.iy})
+			end
+    end
+end

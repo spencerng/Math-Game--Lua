@@ -1,0 +1,5 @@
+function init(self)
+   local id = go.get_id()
+   local board = msg.url("Board#script")
+	msg.post(board, "Holder1", {id})
+end
