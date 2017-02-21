@@ -3,6 +3,7 @@ local num2
 local text
 local operation
 local solution
+local timesBackspacePressed = 0
 
 function init(self)
     msg.post(".", "acquire_input_focus")
@@ -29,6 +30,18 @@ function on_input(self, action_id, action)
         		text = ""
         		local node = gui.get_node("text")
         		gui.set_text(node, text)
+        	end
+        end
+        if action_id == hash("backspace") then
+        	text = gui.get_text(gui.get_node("text"))
+        	newText = string.sub(text, 0, string.len(text)-1)
+        	
+        	--one "press" usually registers several times
+        	if timesBackspacePressed == 5 then 
+        		gui.set_text(gui.get_node("text"),newText)
+        		timesBackspacePressed = 0
+        	else
+        		timesBackspacePressed = timesBackspacePressed +1
         	end
         end
 end
