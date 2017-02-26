@@ -4,6 +4,7 @@ local text
 local operation
 local solution
 local cards = {}
+local backspacePressed = 0
 
 -- Deals with Solving process
 
@@ -51,6 +52,18 @@ function on_input(self, action_id, action)
         		reset(self)
         	end
         end
+        if action_id == hash("backspace") then
+        	if backspacePressed == 5 then --change number as needed
+        		local node = gui.get_node("text")
+        		text = gui.get_text(node)
+        		newText = string.sub(text, 0, string.len(text)-1)
+        		gui.set_text(node, newText)
+        		backspacePressed = 0
+        	else
+        		backspacePressed = backspacePressed +1
+        	end
+        end
+        	
 end
 
 function calculate(self)
@@ -63,7 +76,14 @@ function calculate(self)
       	elseif(operation == hash("-"))then
       		solution = num1 - num2
        	elseif(operation == hash("^"))then
-       		solution = num1 * num2 --exponent function to be implemented -> for loop multiply by itself
+       		if num2 == 0 then
+       			solution = 1
+       		else
+       			solution = num1
+       			for i = 1,num2-1 do
+       				solution = solution * num1
+       			end 
+       		end
        	end
        	print("answer: " .. solution)
 end
