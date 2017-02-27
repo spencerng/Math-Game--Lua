@@ -85,6 +85,11 @@ function snap(self, id1, r1, r2, var)
 	elseif (p1.x > 800 and var == "card") then
 		type = 4
 		print("holder4")
+		msg.post("Verify/Verify#script", "card snapped", {true})
+	end
+	
+	if (not (type == 4)) and var == "card" then
+		msg.post("Verify/Verify#script", "card snapped", {false})
 	end
 		
 	if((p1.x < p2[type].x + r1 and p1.x > p2[type].x - r1) and (p1.y < p2[type].y + r2 and p1.y > p2[type].y - r2)) and connect[type] == nil then
@@ -184,6 +189,17 @@ function on_message(self, message_id, message, sender)
      	for x = 1, 3 do
      		connect[x] = nil
      	end
+     end
+     if message_id == hash("game complete") then
+     		empty_variables(self)
+	
+			-- Deck shuffles cards
+			local deck = msg.url("Deck#script")
+			msg.post(deck, "shuffle")
+			
+			local operations = msg.url("Operations#script")
+			msg.post(operations, "shuffle")
+			start_game()
      end
      
 end

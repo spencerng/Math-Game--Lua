@@ -13,9 +13,30 @@ function update(self, dt)
     -- Remove this function if not needed
 end
 
+local solution
+local solvePossible = false
+local cardOnVerify = false
+
 function on_message(self, message_id, message, sender)
-     if message_id == hash("solution") then
-   		print("SOLUTION RECIEVED")
+   if message_id == hash("solution") then
+   		solution = message[1]
+   		print("SOLUTION RECIEVED: "..solution)
+   end
+   if message_id == hash("one card left", message) then --will need updating once undo is implemented
+   		print("One card left")
+   		if message[1] == solution then
+   			solvePossible = true
+   		end
+   end
+   if message_id == hash("verify clicked") then
+   		print("Verify clicked")
+   		if cardOnVerify and solvePossible then
+   			print("Solved!")
+   			msg.post("/game/Board/Board#script", "game complete")
+   		end
+   end
+   if message_id == hash("card snapped") then
+   		cardOnVerify = message[1]
    end
 end
 

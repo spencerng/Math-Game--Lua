@@ -33,8 +33,12 @@ end
 function on_input(self, action_id, action)
     if action_id == hash("drag") and action.pressed then
     	local exit = gui.get_node("exit")
+    	local verifyButton = gui.get_node("verifyButton")
     	if gui.pick_node(exit, action.x, action.y) then
     		msg.post("/game/Board/Board#script", "end")
+    	end
+    	if gui.pick_node(verifyButton, action.x, action.y) then
+    		msg.post("/game/Board/Verify/Verify#script", "verify clicked")
     	end
     end
 end

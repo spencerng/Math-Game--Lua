@@ -1,4 +1,5 @@
 local numofcards = 6
+local cardsRemaining = 6
 local card1
 local card2
 
@@ -99,6 +100,10 @@ function on_message(self, message_id, message, sender)
    
    if message_id == hash("solved") then -- solved
    		new_card(self, message[1]) 
+   		cardsRemaining = cardsRemaining -1
+   		if cardsRemaining == 1 then
+   			msg.post("Verify/Verify#script", "one card left", message)
+   		end
    end
    
    if message_id == hash("recall") then -- recall, sends everything back
