@@ -56,6 +56,7 @@ function empty_variables(self)
 	connect[1] = nil
 	connect[2] = nil
 	connect[3] = nil
+	connect[4] = nil
 end
 
 function solve(self)
