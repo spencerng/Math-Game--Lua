@@ -14,7 +14,7 @@ function update(self, dt)
 	if game then
     	local s = 0
     	for i=1,100000 do s = s + i end
-    	print(string.format("elapsed time: %.0f\n", os.clock() - x))
+    	--print(string.format("elapsed time: %.0f\n", os.clock() - x))
 		local time = gui.get_node("time")
    		gui.set_text(time, string.format("%.0f\n", os.clock() - x))
    		c_score = os.clock() - x
@@ -64,7 +64,7 @@ function on_input(self, action_id, action)
     		msg.post("/game/Board/Board#script", "end")
     	end
     	if gui.pick_node(verifyButton, action.x, action.y) then
-    		msg.post("/game/Board/Verify/Verify#script", "verify clicked")
+    		msg.post("/game/Board/Verify/Controller#verify", "verify clicked")
     	end
     end
 end

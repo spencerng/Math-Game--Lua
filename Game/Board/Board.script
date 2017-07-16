@@ -86,11 +86,11 @@ function snap(self, id1, r1, r2, var)
 	elseif (p1.x > 800 and var == "card") then
 		type = 4
 		print("holder4")
-		msg.post("Verify/Verify#script", "card snapped", {true})
+		msg.post("Verify/Controller#verify", "card snapped", {true})
 	end
 	
 	if (not (type == 4)) and var == "card" then
-		msg.post("Verify/Verify#script", "card snapped", {false})
+		msg.post("Verify/Controller#verify", "card snapped", {false})
 	end
 		
 	if((p1.x < p2[type].x + r1 and p1.x > p2[type].x - r1) and (p1.y < p2[type].y + r2 and p1.y > p2[type].y - r2)) and connect[type] == nil then

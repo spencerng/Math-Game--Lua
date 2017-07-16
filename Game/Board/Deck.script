@@ -18,7 +18,7 @@ function deal_cards(self)
     
     --Send solution to sidebar
     local sol = msg.url("Verify/V_Holder#script")
-    local verify = msg.url("Verify/Verify#script")
+    local verify = msg.url("Verify/Controller#verify")
 	msg.post(sol, "solution", {solution})
 	msg.post(verify, "solution", {solution})
 end
@@ -102,7 +102,7 @@ function on_message(self, message_id, message, sender)
    		new_card(self, message[1]) 
    		cardsRemaining = cardsRemaining -1
    		if cardsRemaining == 1 then
-   			msg.post("Verify/Verify#script", "one card left", message)
+   			msg.post("Verify/Controller#verify", "one card left", message)
    		end
    end
    
