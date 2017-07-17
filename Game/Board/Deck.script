@@ -28,10 +28,12 @@ function shuffle_cards(self)
 		if self.card[y].exist == 1 then
 			go.delete(self.card[y].id)
 			self.card[y] = nil
+			print("card deleted")
 		end
 	end --deletes cards that still exist and empties the array
 	card1 = nil
 	card2 = nil
+	print("Cards shuffled")
 end
 
 function new_card(self, solution)
@@ -88,8 +90,8 @@ function on_message(self, message_id, message, sender)
    end
    
    if message_id == hash("shuffle") then
-   		print("Cards shuffled")
    		shuffle_cards(self)
+           --print("Cards shuffled")
    end
    
    if message_id == hash("solve") then

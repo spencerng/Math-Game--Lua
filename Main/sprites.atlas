@@ -73,6 +73,9 @@ images {
 images {
   image: "/Main/images/customization_back.png"
 }
+images {
+  image: "/Main/images/congrats.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

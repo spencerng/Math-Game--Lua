@@ -42,9 +42,6 @@ function end_game(self) -- ends game by destroying objects
 	
 	local sidebar = msg.url("/game/Gui/sidebar#gui")
 	msg.post(sidebar, "hide")
-
-	local main_menu = msg.url("/start/start#gui")
-	msg.post(main_menu, "show")
 end
 
 function empty_variables(self)
@@ -102,31 +99,6 @@ function snap(self, id1, r1, r2, var)
 		print("Nothing")
 	end
 	
-	--[[local card_pos = go.get_position(card_id)
-	local operation_pos = go.get_position(operation_id)
-	local holder1_pos = go.get_position(Holder1_id)
-	local holder2_pos = go.get_position(Holder2_id)
-	local opHolder_pos = go.get_position(opHolder_id)
-	
-	if((card_pos.x < holder1_pos.x + 80 and card_pos.x > holder1_pos.x - 80) and (card_pos.y < holder1_pos.y + 50 and card_pos.y > holder1_pos.y - 50)) and connect[1] == nil then
-		go.set_position(holder1_pos, card_id)
-		connect[1] = card_id
-	elseif((card_pos.x < holder2_pos.x + 80 and card_pos.x > holder2_pos.x - 80) and (card_pos.y < holder2_pos.y + 50 and card_pos.y > holder2_pos.y - 50)) and connect[2] == nil then
-		go.set_position(holder2_pos, card_id)
-		connect[2] = card_id
-	elseif connect[1] == card_id then
-		connect[1] = nil
-	elseif connect[2] == card_id then
-		connect[2] = nil
-	end
-	
-	if((operation_pos.x < opHolder_pos.x + 50 and operation_pos.x > opHolder_pos.x - 50) and (operation_pos.y < opHolder_pos.y + 50 and operation_pos.y > opHolder_pos.y - 50)) and connect[3] == nil then
-		go.set_position(opHolder_pos, operation_id)
-		connect[3] = operation_id
-	elseif connect[3] == operation_id then
-		connect[3] = nil
-	end--]]
-	
 	solve(self)
 end
 
@@ -142,7 +114,9 @@ function on_message(self, message_id, message, sender)
      
      if message_id == hash("end") then
      	print("END Game")
-     	end_game(self)
+    	 end_game(self)
+     	local main_menu = msg.url("/start/start#gui")
+		 msg.post(main_menu, "show")
      end
      
      if message_id == hash("Holder1") then
@@ -191,20 +165,21 @@ function on_message(self, message_id, message, sender)
      		connect[x] = nil
      	end
      end
+     
+     if message_id == hash("reverse") then
+    	 local main_menu = msg.url("/start/start#gui")
+		 msg.post(main_menu, "show")
+	 end
+     
      if message_id == hash("game complete") then
-     		empty_variables(self)
-	
-			-- Deck shuffles cards
-			local deck = msg.url("Deck#script")
-			msg.post(deck, "shuffle")
-			
-			local operations = msg.url("Operations#script")
-			msg.post(operations, "shuffle")
-			start_game()
+		end_game()
+		local congrats = msg.url("/game/Gui/congrats#congrats")
+		msg.post(congrats, "show")
+    	print("CHECKPOINT")
      end
      
+     if message_id == hash("next_round") then
+    	 start_game()
+     end
 end
 
-function on_input(self, action_id, action)
-     
-end
