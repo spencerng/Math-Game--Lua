@@ -8,7 +8,6 @@ function on_message(self, message_id, message, sender)
    if message_id == hash("show") then
      msg.post("#", "enable")
      msg.post(".", "acquire_input_focus")
-
    end
    
    if message_id == hash("hide") then
@@ -17,7 +16,8 @@ function on_message(self, message_id, message, sender)
    end
    
    if message_id == hash("score") then
-		gui.set_text(score, message[1])
+	   local score = gui.get_node("score")
+		gui.set_text(score, "Score: " .. message[1])
 	end
 end
 

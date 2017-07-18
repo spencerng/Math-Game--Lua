@@ -42,6 +42,8 @@ function on_message(self, message_id, message, sender)
    
    if message_id == hash("hide") then
    		game = false
+           local congrats = msg.url("congrats#congrats")
+			msg.post(congrats, "score", {c_score}) --formula for c_score to be determined
    		f_score = 0
    		c_score = 0
    		msg.post("#", "disable")
@@ -68,9 +70,3 @@ function on_input(self, action_id, action)
     	end
     end
 end
-
-function final(self)
-	local congrats = msg.url("congrats#congrats")
-	msg.post(congrats, "score", {c_score}) --temporary for now, f_score for end later	
-end
-

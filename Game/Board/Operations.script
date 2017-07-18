@@ -16,7 +16,6 @@ end
 function shuffle_operations(self)
 	for y = 1,numofops do
 		go.delete(self.operation[y].id)
-		print("operation deleted")
 	end --deletes operations that still exist and empties the array
 	operation1 = nil
 	print("Operations shuffled")
