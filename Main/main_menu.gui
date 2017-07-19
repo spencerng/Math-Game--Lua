@@ -8,15 +8,22 @@ textures {
   texture: "/Main/sprites.atlas"
 }
 background_color {
+  x: 0.0
+  y: 0.0
+  z: 0.0
   w: 1.0
 }
 nodes {
   position {
     x: 577.0
     y: 360.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -28,6 +35,7 @@ nodes {
   size {
     x: 1159.0
     y: 725.0
+    z: 0.0
     w: 1.0
   }
   color {
@@ -36,18 +44,40 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
   texture: "sprites1/start_menu"
   id: "background"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
   inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
     x: 430.0
     y: 260.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -59,6 +89,7 @@ nodes {
   size {
     x: 126.0
     y: 145.0
+    z: 0.0
     w: 1.0
   }
   color {
@@ -67,16 +98,40 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
   texture: "sprites1/card1"
   id: "Single"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
   inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -88,15 +143,23 @@ nodes {
   size {
     x: 200.0
     y: 100.0
+    z: 0.0
     w: 1.0
   }
   color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
   text: "Practice"
   font: "system_font"
   id: "single_text"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
@@ -109,17 +172,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
   parent: "Single"
+  layer: ""
   inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
 }
 nodes {
   position {
     x: 724.0
     y: 260.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -131,6 +206,7 @@ nodes {
   size {
     x: 126.0
     y: 145.0
+    z: 0.0
     w: 1.0
   }
   color {
@@ -139,16 +215,40 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
   texture: "sprites1/card1"
   id: "Multi"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
   inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -160,15 +260,23 @@ nodes {
   size {
     x: 200.0
     y: 100.0
+    z: 0.0
     w: 1.0
   }
   color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
   text: "Multiplayer"
   font: "system_font"
   id: "Multi_text"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
@@ -181,17 +289,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
   parent: "Multi"
+  layer: ""
   inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
 }
 nodes {
   position {
     x: 1050.0
     y: 90.0
+    z: 0.0
     w: 1.0
   }
   rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   scale {
@@ -203,6 +323,7 @@ nodes {
   size {
     x: 60.0
     y: 60.0
+    z: 0.0
     w: 1.0
   }
   color {
@@ -211,9 +332,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
   texture: "sprites1/mute"
   id: "box"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
   inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
   size_mode: SIZE_MODE_AUTO
 }
+material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
+max_nodes: 512

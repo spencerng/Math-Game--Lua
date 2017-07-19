@@ -11,6 +11,7 @@ game_binding = /input/game.input_bindingc
 [display]
 width = 1154
 height = 720
+fullscreen = 0
 
 [physics]
 scale = 0.02
@@ -23,4 +24,10 @@ max_count = 512
 
 [android]
 package = com.MCA.mathgame
+app_icon_36x36 = /Main/images/temp_logo.png
+app_icon_48x48 = /Main/images/temp_logo.png
+app_icon_72x72 = /Main/images/temp_logo.png
+app_icon_96x96 = /Main/images/temp_logo.png
+app_icon_144x144 = /Main/images/temp_logo.png
+app_icon_192x192 = /Main/images/temp_logo.png
 

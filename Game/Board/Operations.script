@@ -18,6 +18,7 @@ function shuffle_operations(self)
 		go.delete(self.operation[y].id)
 	end --deletes operations that still exist and empties the array
 	operation1 = nil
+	print("Operations shuffled")
 end
 
 function match_operations(self, id1) --Sends the operations to solve gui
@@ -39,8 +40,8 @@ function on_message(self, message_id, message, sender)
    end
    
     if message_id == hash("shuffle") then
-   		print("Operations shuffled")
    		shuffle_operations(self)
+           --print("Operations shuffled")
    end
    
    if message_id == hash("solve") then

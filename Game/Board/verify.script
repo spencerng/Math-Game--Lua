@@ -39,13 +39,3 @@ function on_message(self, message_id, message, sender)
    		cardOnVerify = message[1]
    end
 end
-
-function on_input(self, action_id, action)
-    -- Add input-handling code here
-    -- Remove this function if not needed
-end
-
-function on_reload(self)
-    -- Add reload-handling code here
-    -- Remove this function if not needed
-end
